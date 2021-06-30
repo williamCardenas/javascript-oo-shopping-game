@@ -37,18 +37,23 @@ const dateDiff = (date1, date2) => {
 };
 
 // Here, use Object.defineProperty to create property - daysToExpire
-Object.defineProperty(Product, 'daysToExpire', {
+Object.defineProperty(Product.prototype, 'daysToExpire', {
     get: function () {
-        let dateNow = new Date()
-        return dateDiff(this.expiryDate, dateNow)
-    },
-    enumerable: true,
-    configurable: true
+        return dateDiff(this.expiryDate, new Date())
+    }
 })
 
 // Add method getDetails to Product here
+Product.prototype.getDetails = function(){
+    return `Product Name: ${this.name} , Product Price: ${this.price}`
+}
 
 // Define the MagicProduct class here
+function MagicProduct(id, name, price, expiryDate, points, isBonus){
+    Product.call(this, id, name, price, expiryDate)
+    this.points = points
+    this.isBonus = isBonus
+}
 
 // Establish inheritance between Product() & MagicProduct() here
 
