@@ -84,7 +84,7 @@ const loadProducts = (map, prodId) => {
     let a = new Array();
     try {
         // Call Object.keys() to load the property names of the Product object in to prodKeys array here
-        let prodKeys = [];
+        let prodKeys = Object.keys(new Product());
 
         let iterator_obj = map.entries();
 
@@ -94,7 +94,7 @@ const loadProducts = (map, prodId) => {
                 const value = item[1];
 
                 // Create and assign an instance of Product to prodObj here
-                let prodObj;
+                let prodObj = new Product();
 
                 if (prodObj != undefined && prodObj != null) {
                     for (let i = 0; i < prodKeys.length; i++) {
@@ -128,7 +128,7 @@ const loadMagicProducts = (map, prodId) => {
     let a = new Array();
     try {
         // Call Object.key() to load the property names of the MagicProduct object in to magProdKeys array here
-        let magProdKeys = [];
+        let magProdKeys = Object.keys(new MagicProduct());
 
         let iterator_obj = map.entries();
 
@@ -138,7 +138,7 @@ const loadMagicProducts = (map, prodId) => {
                 const value = item[1];
 
                 // Create and assign an instance of MagicProduct to prodObj here
-                let magProdObj;
+                let magProdObj = new MagicProduct();
 
                 if (magProdObj != undefined && magProdObj != null) {
                     for (let i = 0; i < magProdKeys.length; i++) {
