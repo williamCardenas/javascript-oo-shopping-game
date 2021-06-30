@@ -56,8 +56,28 @@ function MagicProduct(id, name, price, expiryDate, points, isBonus){
 }
 
 // Establish inheritance between Product() & MagicProduct() here
+MagicProduct.prototype = Object.create(Product.prototype);
 
 // Define Rating class here
+class Rating{
+    constructor() {
+        this.rate = ''
+    }
+
+    set rating(val) {
+        if(val > 1 && val <= 4){
+            this.rate = 'OK'
+        }
+        else if(val > 4 && val <= 7){
+            this.rate = 'GOOD'
+        }
+        else if(val > 7){
+            this.rate = 'EXCEPTIONAL'
+        }else{
+            this.rate = 'BAD'
+        }
+    }
+}
 
 // Complete the loadProducts function
 const loadProducts = (map, prodId) => {
