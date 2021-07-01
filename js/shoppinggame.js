@@ -44,12 +44,12 @@ Object.defineProperty(Product.prototype, 'daysToExpire', {
 })
 
 // Add method getDetails to Product here
-Product.prototype.getDetails = function(){
+Product.prototype.getDetails = function () {
     return `Product Name: ${this.name} , Product Price: ${this.price}`
 }
 
 // Define the MagicProduct class here
-function MagicProduct(id, name, price, expiryDate, points, isBonus){
+function MagicProduct(id, name, price, expiryDate, points, isBonus) {
     Product.call(this, id, name, price, expiryDate)
     this.points = points
     this.isBonus = isBonus
@@ -59,21 +59,21 @@ function MagicProduct(id, name, price, expiryDate, points, isBonus){
 MagicProduct.prototype = Object.create(Product.prototype);
 
 // Define Rating class here
-class Rating{
+class Rating {
     constructor() {
         this.rate = ''
     }
 
     set rating(val) {
-        if(val > 1 && val <= 4){
+        if (val > 1 && val <= 4) {
             this.rate = 'OK'
         }
-        else if(val > 4 && val <= 7){
+        else if (val > 4 && val <= 7) {
             this.rate = 'GOOD'
         }
-        else if(val > 7){
+        else if (val > 7) {
             this.rate = 'EXCEPTIONAL'
-        }else{
+        } else {
             this.rate = 'BAD'
         }
     }
@@ -262,7 +262,7 @@ const findPointsToBill = (roundedTotal) => {
 
 // Complete this function
 const findPointsForExpDate = (prod) => {
-    if(prod.daysToExpire < 30){
+    if (prod.daysToExpire < 30) {
         return 10
     }
     return 0
@@ -298,6 +298,7 @@ function init(data) {
 
         rl.question("What's your name? ", function (name) {
             // Assign the player object's name property to the user entered name here
+            player.name = name
             console.log(`Welcome ${player.name} !!!`.blue);
             start(data);
         });
@@ -320,23 +321,28 @@ function start(data) {
 const shop = (prodList, tBill, lastProd) => {
     let totalBill = tBill;
     const prId = generateProductId();
-    let product = null; // Assign the value of product here
-    let productDetails = null; // Assign the value of productDetails here
+    let product = Object.is(lastProd, undefined) ? lastProd : getProduct(prodList, prId); // Assign the value of product here
+    let productDetails = product.getDetails(); // Assign the value of productDetails here
 
     rl.question(`You can buy - ${productDetails}.\n Do you want to buy this item <Y/N>? `.yellow, function (option) {
-        const regexYes = null; // Use the RegExp built-in object type here as appropriate
-        const regexNo = null; // Use the RegExp built-in object type here as appropriate
+        const regexYes = new RegExp('y', 'i'); // Use the RegExp built-in object type here as appropriate
+        const regexNo = new RegExp('n', 'i'); // Use the RegExp built-in object type here as appropriate
         if (regexYes.test(option)) {
             totalBill = calculateBill(product, totalBill);
             calculatePoints(product, totalBill);
             console.log(`${player.name} you earned ${player.getCurrentScore()} points!`.bold);
             if (player.score >= 500) {
                 // Define and set new property status in the player object here
+                Object.defineProperty(player, 'status', {
+                    value: 'Shopping Master'
+                })
                 exitWon();
             } else {
                 let iCount = ++player.items;
                 // Make the Object.defineProperty() call here to set the value of items using the value of iCount
-
+                Object.defineProperty(player, 'items', {
+                    value: iCount
+                })
                 if (player.items < 10) {
                     shop(prodList, totalBill);
                 } else {
